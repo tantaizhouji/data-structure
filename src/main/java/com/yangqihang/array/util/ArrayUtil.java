@@ -137,54 +137,68 @@ public final class ArrayUtil {
     }
 
     /**
-     * 合并区间,将重叠的区间合并
+     * 合并区间,将重叠的区间合并,自己写的有点混乱
+     * 思路:
+     * 1.按照左边界从小到大对区间数组进行排序
+     * 2.遍历合并
      *
      * @param intervals
      * @return
      */
     public static int[][] merge(int[][] intervals) {
+        // 用来排序的集合
+        TreeSet<int[]> set = new TreeSet<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[0] > o2[0]) {
+                    return 1; // 如果o1的左边界大于o2的左边界,左边界小的放到前面
+                } else if (o1[0] == o2[0]) {
+                    // 左边界相同
+
+                    if ((o1[1] - o1[0]) < (o2[1] - o2[0])) {
+                        return 1; //  区间大的放到前面
+                    }
+                }
+                return -1;
+            }
+        });
+
+        // 区间按照排序规则排序
+        set.addAll(Arrays.asList(intervals));
+
         // 创建数组集合,存放合并之后的数组集
         List<int[]> list = new ArrayList<>();
 
-        for (int i = 0; i < intervals.length; i++) {
+        set.forEach(i -> {
             // 遍历待合并区间数组
-
 
             // 是否需要合并的标志,默认false,不需要合并
             boolean flag = false;
+
             for (int[] ints : list) {
                 // 遍历合并后的区间集合
 
-                if (ints[0] > intervals[i][1] || ints[1] < intervals[i][0]) {
+                if (ints[0] > i[1] || ints[1] < i[0]) {
                     // 合并集合中区间的左边界大于待合并区间的右边界,或合并集合中区间的右边界小于待合并区间的左边界,表明没有交集,不需要合并
 
                 } else {
                     // 满足合并条件,合并
-                    ints[0] = Math.min(ints[0], intervals[i][0]); // 左边界去最小值
-                    ints[1] = Math.max(ints[1], intervals[i][1]); // 右边界取最大值
+                    ints[0] = Math.min(ints[0], i[0]); // 左边界去最小值
+                    ints[1] = Math.max(ints[1], i[1]); // 右边界取最大值
 
                     flag = true;
+                    break;
                 }
             }
 
             if (!flag) {
                 // 没有合并,将区间添加到集合中
-                list.add(intervals[i]);
-            }
-        }
-
-        // 临时容器,用来去重
-        Set<int[]> tempSet = new TreeSet<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[0] - o2[0] + (o1[1] - o2[1]);
+                list.add(i);
             }
         });
 
-        tempSet.addAll(list);
-
-        int[][] result = new int[tempSet.size()][2];
-        tempSet.toArray(result); // 集合转到数组中
+        int[][] result = new int[list.size()][2];
+        list.toArray(result); // 集合转到数组中
 
         return result;
     }

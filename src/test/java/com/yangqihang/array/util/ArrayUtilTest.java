@@ -2,8 +2,7 @@ package com.yangqihang.array.util;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -39,7 +38,9 @@ public class ArrayUtilTest {
 
     @Test
     public void merge() {
-        int[][] arr = new int[][]{{2, 3}, {4, 5}, {6, 7}, {8, 9}, {1, 10}};
+        int[][] arr = new int[][]{{2, 3}, {0, 1}, {1, 2}, {3, 4}, {4, 5}, {1, 1}, {0, 1}, {4, 6}, {5, 7}, {1, 1}, {3, 5}};
+//        int[][] arr = new int[][]{{0, 0}, {1, 2}, {5, 5}, {2, 4}, {3, 3}, {5, 6}, {5, 6}, {4, 6}, {0, 0}, {1, 1}, {0, 2}, {4, 5}};
+//        int[][] arr = new int[][]{{2, 2}, {1, 3}, {3, 3}, {3, 4}, {2, 3}, {4, 5}, {4, 4}};
         int[][] merge = ArrayUtil.merge(arr);
         for (int i = 0; i < merge.length; i++) {
             System.out.print("[");
@@ -56,4 +57,5 @@ public class ArrayUtilTest {
             }
         }
     }
+
 }
