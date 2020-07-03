@@ -203,4 +203,83 @@ public final class ArrayUtil {
         return result;
     }
 
+    /**
+     * M * N 矩阵中某个元素为0,则将其所在的行和列清零
+     * 思路:
+     * 1.遍历矩阵,将为0元素的行值放入到 RowsSet 中，将列值放入到 ColumnsSet 中
+     * 2.遍历2个集合,将同行,同列的所有元素置为0
+     * 使用set集合存放需要清零的行列,效率太低了
+     *
+     * @param matrix
+     */
+    public static void setZeroes(int[][] matrix) {
+
+        Set<Integer> rows = new HashSet<>();    // 需要清空的行集合
+        Set<Integer> columns = new HashSet<>(); // 需要清空的列集合
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                // i 为行, j 为列
+                if (matrix[i][j] == 0) {
+                    // 如果当前元素为0
+
+                    rows.add(i);    // 行索引位置添加到行集合中
+                    columns.add(j); // 列索引位置添加到列集合中
+                }
+            }
+        }
+        for (Integer row : rows) {
+            // 遍历行集合
+
+            // 设置该行的所有元素为0
+            Arrays.fill(matrix[row], 0);
+        }
+        for (Integer column : columns) {
+            // 遍历列集合
+
+            // 设置该列的所有元素为0
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][column] = 0;
+            }
+        }
+    }
+
+    /**
+     * M * N 矩阵中某个元素为0,则将其所在的行和列清零
+     * 使用2个一维数组存放清理行列的信息,提升效率
+     *
+     * @param matrix
+     */
+    public static void setZeroes2(int[][] matrix) {
+        boolean[] rows = new boolean[matrix.length];       // 存放行是否需要清0的信息
+        boolean[] columns = new boolean[matrix[0].length]; // 存放列是否需要清0的信息
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                // i 行, j 列
+
+                if (matrix[i][j] == 0) {
+                    // 当前元素为0
+
+                    rows[i] = true;    // 当前行需要置0
+                    columns[j] = true; // 当前列需要置0
+                }
+            }
+        }
+        for (int i = 0; i < rows.length; i++) {
+            // 遍历行信息
+            if (rows[i]) {
+                // 该行置0,
+                Arrays.fill(matrix[i], 0);
+            }
+        }
+        for (int j = 0; j < columns.length; j++) {
+            // 遍历列信息
+            if (columns[j]) {
+                // 该列置0
+                for (int i = 0; i < matrix.length; i++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
 }

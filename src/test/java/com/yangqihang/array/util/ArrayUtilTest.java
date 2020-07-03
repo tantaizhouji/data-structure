@@ -58,4 +58,18 @@ public class ArrayUtilTest {
         }
     }
 
+    @Test
+    public void setZeroes() {
+        int[][] matrix = {{0,1,1},{1,1,1},{1,0,1},{1,1,1}};
+        ArrayUtil.setZeroes(matrix);
+        System.out.println(Arrays.deepToString(matrix));
+    }
+
+    @Test
+    public void setZeroes2() {
+        int[][] matrix = {{0,1,1},{1,1,1},{1,0,1},{1,1,1}};
+        ArrayUtil.setZeroes2(matrix);
+        System.out.println(Arrays.deepToString(matrix));
+    }
+
 }
