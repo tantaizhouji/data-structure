@@ -38,23 +38,67 @@ public class ArrayUtilTest {
 
     @Test
     public void merge() {
-        int[][] arr = new int[][]{{2, 3}, {0, 1}, {1, 2}, {3, 4}, {4, 5}, {1, 1}, {0, 1}, {4, 6}, {5, 7}, {1, 1}, {3, 5}};
-//        int[][] arr = new int[][]{{0, 0}, {1, 2}, {5, 5}, {2, 4}, {3, 3}, {5, 6}, {5, 6}, {4, 6}, {0, 0}, {1, 1}, {0, 2}, {4, 5}};
-//        int[][] arr = new int[][]{{2, 2}, {1, 3}, {3, 3}, {3, 4}, {2, 3}, {4, 5}, {4, 4}};
-        int[][] merge = ArrayUtil.merge(arr);
-        for (int i = 0; i < merge.length; i++) {
-            System.out.print("[");
-            for (int j = 0; j < merge[i].length; j++) {
-                System.out.print(merge[i][j]);
-                if (j != merge[i].length - 1) {
-                    System.out.print(",");
-                }
-            }
+        int[][] arr1 = new int[][]{{2, 3}, {0, 1}, {1, 2}, {3, 4}, {4, 5}, {1, 1}, {0, 1}, {4, 6}, {5, 7}, {1, 1}, {3, 5}};
+        int[][] arr2 = new int[][]{{0, 0}, {1, 2}, {5, 5}, {2, 4}, {3, 3}, {5, 6}, {5, 6}, {4, 6}, {0, 0}, {1, 1}, {0, 2}, {4, 5}};
+        int[][] arr3 = new int[][]{{2, 2}, {1, 3}, {3, 3}, {3, 4}, {2, 3}, {4, 5}, {4, 4}};
+        String test1 = Arrays.deepToString(ArrayUtil.merge(arr1));
+        String test2 = Arrays.deepToString(ArrayUtil.merge(arr2));
+        String test3 = Arrays.deepToString(ArrayUtil.merge(arr3));
+        if (!test1.equals(Arrays.deepToString(new int[][]{{0, 7}}))) {
+            throw new RuntimeException("测试arr1不通过");
+        }
+        if (!test2.equals(Arrays.deepToString(new int[][]{{0, 6}}))) {
+            throw new RuntimeException("测试arr2不通过");
+        }
+        if (!test3.equals(Arrays.deepToString(new int[][]{{1, 5}}))) {
+            throw new RuntimeException("测试arr3不通过");
+        }
 
-            System.out.print("]");
-            if (i != merge.length - 1) {
-                System.out.print(",");
-            }
+    }
+
+    @Test
+    public void merge2() {
+        int[][] arr1 = new int[][]{{2, 3}, {0, 1}, {1, 2}, {3, 4}, {4, 5}, {1, 1}, {0, 1}, {4, 6}, {5, 7}, {1, 1}, {3, 5}};
+        int[][] arr2 = new int[][]{{0, 0}, {1, 2}, {5, 5}, {2, 4}, {3, 3}, {5, 6}, {5, 6}, {4, 6}, {0, 0}, {1, 1}, {0, 2}, {4, 5}};
+        int[][] arr3 = new int[][]{{2, 2}, {1, 3}, {3, 3}, {3, 4}, {2, 3}, {4, 5}, {4, 4}};
+        String test1 = Arrays.deepToString(ArrayUtil.merge2(arr1));
+        String test2 = Arrays.deepToString(ArrayUtil.merge2(arr2));
+        String test3 = Arrays.deepToString(ArrayUtil.merge2(arr3));
+        if (!test1.equals(Arrays.deepToString(new int[][]{{0, 7}}))) {
+            throw new RuntimeException("测试arr1不通过");
+        }
+        if (!test2.equals(Arrays.deepToString(new int[][]{{0, 6}}))) {
+            throw new RuntimeException("测试arr2不通过");
+        }
+        if (!test3.equals(Arrays.deepToString(new int[][]{{1, 5}}))) {
+            throw new RuntimeException("测试arr3不通过");
+        }
+
+    }
+
+    @Test
+    public void rotate() {
+        int[][] matrix1 = {{5, 1, 9, 11}, {2, 4, 8, 10}, {13, 3, 6, 7}, {15, 14, 12, 16}};
+        int[][] matrix2 = {{1, 1, 1, 1}, {2, 2, 2, 2}, {3, 3, 3, 3}, {4, 4, 4, 4}};
+        ArrayUtil.rotate(matrix1);
+        ArrayUtil.rotate(matrix2);
+        int[][] expect1 = {{15, 13, 2, 5}, {14, 3, 4, 1}, {12, 6, 8, 9}, {16, 7, 10, 11}};
+        int[][] expect2 = {{4, 3, 2, 1}, {4, 3, 2, 1}, {4, 3, 2, 1}, {4, 3, 2, 1}};
+        if (!(Arrays.deepEquals(matrix1, expect1) && Arrays.deepEquals(matrix2, expect2))) {
+            throw new RuntimeException("测试不通过");
+        }
+    }
+
+    @Test
+    public void rotate2() {
+        int[][] matrix1 = {{5, 1, 9, 11}, {2, 4, 8, 10}, {13, 3, 6, 7}, {15, 14, 12, 16}};
+        int[][] matrix2 = {{1, 1, 1, 1}, {2, 2, 2, 2}, {3, 3, 3, 3}, {4, 4, 4, 4}};
+        ArrayUtil.rotate2(matrix1);
+        ArrayUtil.rotate2(matrix2);
+        int[][] expect1 = {{15, 13, 2, 5}, {14, 3, 4, 1}, {12, 6, 8, 9}, {16, 7, 10, 11}};
+        int[][] expect2 = {{4, 3, 2, 1}, {4, 3, 2, 1}, {4, 3, 2, 1}, {4, 3, 2, 1}};
+        if (!(Arrays.deepEquals(matrix1, expect1) && Arrays.deepEquals(matrix2, expect2))) {
+            throw new RuntimeException("测试不通过");
         }
     }
 

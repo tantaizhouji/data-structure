@@ -203,4 +203,92 @@ public final class ArrayUtil {
         return result;
     }
 
+    /**
+     * 区间合并,理清思路后的代码编写
+     * 1.对区间数组左边界从小到大排序
+     * 2.逐个比较合并
+     *
+     * @param intervals
+     * @return
+     */
+    public static int[][] merge2(int[][] intervals) {
+        // 将数组进行左边界从小到大排序
+        Arrays.sort(intervals, Comparator.comparingInt(value -> value[0]));
+        List<int[]> list = new ArrayList<>();
+        for (int[] interval : intervals) {
+            // 循环未操作的区间数组
+
+            boolean addList = true; // 当前未操作区间是否加到合并集合中标志
+            for (int[] arr : list) {
+                // 遍历合并后的区间集合
+
+                if (interval[0] <= arr[1]) {
+                    // 当前操作区间的左边界小于等于当前合并区间的右边界,需要合并区间
+                    // 合并的右区间变更为右区间中最大值
+                    arr[1] = Math.max(arr[1], interval[1]);
+
+                    // 合并之后,标志位置false
+                    addList = false;
+                }
+            }
+
+            if (addList) {
+
+                // 标志位为true,区间没发生合并需要添加合并集合中
+                list.add(interval);
+            }
+        }
+
+        int[][] result = new int[list.size()][2];
+        list.toArray(result); // 集合转到数组中
+
+        return result;
+    }
+
+    /**
+     * 旋转矩阵
+     * N * N的二维数组顺时针旋转90度
+     * 需要复制个临时数组实现,最简单容易想到的实现,但是需要一个数组大小的额外空间
+     *
+     * @param matrix
+     */
+    public static void rotate(int[][] matrix) {
+        int[][] temp = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            System.arraycopy(matrix[i], 0, temp[i], 0, matrix[i].length);
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = temp[temp.length - 1 - j][i];
+            }
+        }
+    }
+
+    /**
+     * N * N 矩阵旋转
+     * 1.先通过对角线(左上-右下)对称交换
+     * 2.再通过垂直中轴线对称交换,得到矩阵顺时针旋转90度
+     * 3.交换通过 a = a + b; b = a - b; a = a - b;无需额外的内存空间达到交互
+     *
+     * @param matrix
+     */
+    public static void rotate2(int[][] matrix) {
+        for (int i = 0; i < matrix.length - 1; i++) {
+            for (int j = i + 1; j < matrix.length; j++) {
+                // 通过对角线(左上 - 右下)对称交换
+                matrix[i][j] = matrix[i][j] + matrix[j][i]; // a = a + b
+                matrix[j][i] = matrix[i][j] - matrix[j][i]; // b = a - b
+                matrix[i][j] = matrix[i][j] - matrix[j][i]; // a = a - b
+            }
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length / 2; j++) {
+                // 通过垂直的中轴线左右对称交换
+                matrix[i][j] = matrix[i][j] + matrix[i][matrix.length - 1 - j];
+                matrix[i][matrix.length - 1 - j] = matrix[i][j] - matrix[i][matrix.length - 1 - j];
+                matrix[i][j] = matrix[i][j] - matrix[i][matrix.length - 1 - j];
+            }
+        }
+    }
+
 }
