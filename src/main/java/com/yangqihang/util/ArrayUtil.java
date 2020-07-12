@@ -1,4 +1,4 @@
-package com.yangqihang.array.util;
+package com.yangqihang.util;
 
 import java.util.*;
 
